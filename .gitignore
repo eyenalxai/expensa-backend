@@ -1,0 +1,5 @@
+src/expensa_backend.egg-info
+.venv
+.vscode
+.pdm.toml
+.mypy_cache

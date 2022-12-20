@@ -1,0 +1,11 @@
+[flake8]
+# Q000: Double quotes found but single quotes preferred
+# I001: isort found an import in the wrong position
+# S104: Possible binding to all interfaces
+ignore = Q000, I001, S104
+max-line-length = 120
+
+# Exclude some directories from flake8
+# __init__.py files are excluded by default
+exclude =
+    __init__.py
