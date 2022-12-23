@@ -1,13 +1,16 @@
 [flake8]
-# Q000: Double quotes found but single quotes preferred
+# B008: Do not perform function calls in argument defaults
+# D100: Missing docstring in public module
+# D101: Missing docstring in public class
+# D102: Missing docstring in public method
+# D103 Missing docstring in public function
 # I001: isort found an import in the wrong position
+# Q000: Double quotes found but single quotes preferred
 # S104: Possible binding to all interfaces
 # WPS306: Found class without a base class
-# D100: Missing docstring in public module
-# B008: Do not perform function calls in argument defaults
 # WPS404: Found complex default value
-ignore = Q000, I001, S104, WPS306, D100, B008, WPS404
-max-line-length = 89
+ignore = B008, D100, D101, D102, D103, I001, Q000, S104, WPS306, WPS404
+max-line-length = 88
 
 # Exclude some directories from flake8
 # __init__.py files are excluded by default
