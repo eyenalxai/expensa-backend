@@ -1,8 +1,8 @@
 from sqlalchemy import Result, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from lib.password import get_password_hash
-from models.models import UserModel
+from app.models.models import UserModel
+from app.utils.password import get_password_hash
 
 
 async def get_user(

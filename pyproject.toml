@@ -36,7 +36,7 @@ license = { text = "MIT" }
 py-modules = []
 
 [tool.mypy]
-exclude = [".git", ".idea", ".mypy_cache", ".venv", ".vscode", "migrations"]
+exclude = [".git", ".idea", ".mypy_cache", ".venv", ".vscode", ".migrations"]
 pretty = true
 check_untyped_defs = true
 disallow_incomplete_defs = true
@@ -49,10 +49,10 @@ warn_unreachable = true
 profile = "black"
 
 [tool.black]
-exclude = [".git", ".idea", ".mypy_cache", ".venv", ".vscode", "migrations"]
+exclude = [".git", ".idea", ".mypy_cache", ".venv", ".vscode", ".migrations"]
 line-length = 88
 
 [tool.vulture]
-exclude = [".git", ".idea", ".mypy_cache", ".venv", ".vscode", "migrations"]
+exclude = [".git", ".idea", ".mypy_cache", ".venv", ".vscode", ".migrations"]
 ignore_names = ["Config", "frozen", "token_type", "orm_mode", "cls", "exp"]
 ignore_decorators = ["@auth_router.*", "@user_router.*", "@validator"]

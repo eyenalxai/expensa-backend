@@ -3,12 +3,11 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_401_UNAUTHORIZED
 
-from configuration.logger import logger
-from lib.auth.token import decode_jwt_token
-from lib.database import get_session
-from lib.password import verify_password
-from models.models import UserModel
-from query.user_query import create_user, get_user
+from app.models.models import UserModel
+from app.utils.database import get_session
+from app.utils.password import verify_password
+from app.utils.query.user_query import create_user, get_user
+from app.utils.token import decode_jwt_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth")
 
@@ -21,9 +20,6 @@ async def get_current_user(
     user = await get_user(async_session=async_session, username=payload.sub)
 
     if user is None:
-        logger.error(
-            "User with username {username} not found".format(username=payload.sub),
-        )
         raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
 
     return user

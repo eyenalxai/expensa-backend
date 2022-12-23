@@ -1,7 +1,7 @@
 from pydantic import BaseSettings, Field, validator
 
 
-class Settings(BaseSettings):
+class AppConfig(BaseSettings):
     database_url: str = Field(env="DATABASE_URL")
     port: int = Field(env="PORT")
     is_localhost: bool = Field(env="IS_LOCALHOST", default=True)
@@ -16,7 +16,7 @@ class Settings(BaseSettings):
         return [self.algorithm]
 
     @property
-    def async_database_url(self: "Settings") -> str:
+    def async_database_url(self: "AppConfig") -> str:
         async_database_url = self.database_url.replace(
             "postgresql://",
             "postgresql+asyncpg://",
@@ -28,7 +28,7 @@ class Settings(BaseSettings):
         return async_database_url
 
     @property
-    def frontend_origin(self: "Settings") -> str:
+    def frontend_origin(self: "AppConfig") -> str:
         if self.is_localhost:
             return "http://{frontend_domain}".format(
                 frontend_domain=self.frontend_domain,
@@ -36,12 +36,12 @@ class Settings(BaseSettings):
         return "https://{frontend_domain}".format(frontend_domain=self.frontend_domain)
 
     @property
-    def allowed_origins(self: "Settings") -> list:
+    def allowed_origins(self: "AppConfig") -> list:
         return [self.frontend_origin]
 
     @validator("database_url")
     def _database_url_must_start_with_postgresql(
-        cls: "Settings",  # noqa: N805 First argument of a method should be named 'self'
+        cls: "AppConfig",  # noqa: N805 First argument of a method should be 'self'
         v: str,  # noqa: WPS111 Found too short name
     ) -> str:
         if not v.startswith("postgresql://"):
@@ -49,4 +49,4 @@ class Settings(BaseSettings):
         return v
 
 
-base_settings = Settings()
+app_config = AppConfig()

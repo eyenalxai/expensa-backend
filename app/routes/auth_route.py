@@ -3,10 +3,9 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_401_UNAUTHORIZED
 
-from dto.auth import AccessToken
-from lib.auth.authenticate import authenticate_user
-from lib.auth.token import create_tokens_response, decode_jwt_token
-from lib.database import get_session
+from app.utils.auth import authenticate_user
+from app.utils.database import get_session
+from app.utils.token import AccessToken, create_tokens_response, decode_jwt_token
 
 auth_router = APIRouter(tags=["Auth"])
 
