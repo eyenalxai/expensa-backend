@@ -36,11 +36,9 @@ async def refresh_tokens(
 
     payload = decode_jwt_token(token=refresh_token)
 
-    user_id = int(payload.sub)
-
     return create_tokens_response(
         response=response,
-        user_id=user_id,
+        username=payload.sub,
     )
 
 
@@ -67,4 +65,4 @@ async def auth(
         password=auth_data.password,
     )
 
-    return create_tokens_response(response=response, user_id=user.user_id)
+    return create_tokens_response(response=response, username=user.username)

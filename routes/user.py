@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 
 from dto.user import User
 from lib.auth.authenticate import get_current_user
-from models.user import UserModel
+from models.models import UserModel
 
 user_router = APIRouter(tags=["User"])
 

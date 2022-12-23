@@ -10,19 +10,19 @@ from dto.auth import AccessToken, Token
 from settings.settings_reader import base_settings
 
 
-def create_jwt_token(user_id: int, expires_delta: timedelta) -> str:
+def create_jwt_token(username: str, expires_delta: timedelta) -> str:
     """
     Create JWT token.
 
     Args:
-        user_id (int): Username.
+        username (str): Username.
         expires_delta (timedelta): Token expires delta.
 
     Returns:
         str: JWT token.
     """
     expire = (datetime.now() + expires_delta).timestamp()
-    to_encode = Token(sub=str(user_id), exp=expire)
+    to_encode = Token(sub=username, exp=expire)
     return jwt.encode(
         to_encode.dict(),
         base_settings.hashing_secret,
@@ -30,12 +30,12 @@ def create_jwt_token(user_id: int, expires_delta: timedelta) -> str:
     )
 
 
-def create_tokens(user_id: int) -> tuple[str, str]:
+def create_tokens(username: str) -> tuple[str, str]:
     """
     Create access and refresh tokens.
 
     Args:
-        user_id (int): Username.
+        username (str): Username.
 
     Returns:
         tokens (tuple[str, str]): Access and refresh tokens tuple.
@@ -46,19 +46,19 @@ def create_tokens(user_id: int) -> tuple[str, str]:
     )
 
     access_token = create_jwt_token(
-        user_id=user_id,
+        username=username,
         expires_delta=access_token_expires,
     )
 
     refresh_token = create_jwt_token(
-        user_id=user_id,
+        username=username,
         expires_delta=refresh_token_expires,
     )
 
     return access_token, refresh_token
 
 
-def create_tokens_response(response: Response, user_id: int) -> AccessToken:
+def create_tokens_response(response: Response, username: str) -> AccessToken:
     """
     Create access and refresh tokens.
 
@@ -67,13 +67,13 @@ def create_tokens_response(response: Response, user_id: int) -> AccessToken:
 
     Args:
         response (Response): Response.
-        user_id (int): User ID.
+        username (str): User ID.
 
     Returns:
         AccessToken (AccessToken): Access token.
 
     """
-    access_token, refresh_token = create_tokens(user_id=user_id)
+    access_token, refresh_token = create_tokens(username=username)
 
     response.set_cookie(
         key="refresh_token",

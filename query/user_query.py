@@ -1,49 +1,25 @@
-from sqlalchemy import Result, Select, select
+from sqlalchemy import Result, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from lib.password import get_password_hash
-from models.user import UserModel
-
-
-def build_get_user_query(
-    identifier: str | int,
-) -> Select:
-    """
-    Build get user query.
-
-    Args:
-        identifier (str | int): Username or user_id.
-
-    Returns:
-        Select: User query.
-
-    Raises:
-        ValueError: If identifier is not str or int.
-    """
-    if isinstance(identifier, str):
-        return select(UserModel).where(UserModel.username == identifier)
-
-    if isinstance(identifier, int):
-        return select(UserModel).where(UserModel.user_id == identifier)
-
-    raise ValueError("Username or user_id must be provided.")
+from models.models import UserModel
 
 
 async def get_user(
     async_session: AsyncSession,
-    identifier: str | int,
+    username: str,
 ) -> UserModel | None:
     """
     Get user by username or user_id.
 
     Args:
         async_session (AsyncSession): Async database session.
-        identifier (str | int): Username or user_id.
+        username (str): Username or user_id.
 
     Returns:
         UserModel | None: User models or None.
     """
-    user_query = build_get_user_query(identifier=identifier)
+    user_query = select(UserModel).where(UserModel.username == username)
 
     user_result: Result = await async_session.execute(user_query)
 
