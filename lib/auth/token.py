@@ -11,16 +11,6 @@ from settings.settings_reader import base_settings
 
 
 def create_jwt_token(username: str, expires_delta: timedelta) -> str:
-    """
-    Create JWT token.
-
-    Args:
-        username (str): Username.
-        expires_delta (timedelta): Token expires delta.
-
-    Returns:
-        str: JWT token.
-    """
     expire = (datetime.now() + expires_delta).timestamp()
     to_encode = Token(sub=username, exp=expire)
     return jwt.encode(
@@ -31,15 +21,6 @@ def create_jwt_token(username: str, expires_delta: timedelta) -> str:
 
 
 def create_tokens(username: str) -> tuple[str, str]:
-    """
-    Create access and refresh tokens.
-
-    Args:
-        username (str): Username.
-
-    Returns:
-        tokens (tuple[str, str]): Access and refresh tokens tuple.
-    """
     access_token_expires = timedelta(minutes=base_settings.access_token_expire_minutes)
     refresh_token_expires = timedelta(
         minutes=base_settings.refresh_token_expire_minutes,
@@ -59,20 +40,6 @@ def create_tokens(username: str) -> tuple[str, str]:
 
 
 def create_tokens_response(response: Response, username: str) -> AccessToken:
-    """
-    Create access and refresh tokens.
-
-    Sets refresh token to HttpOnly cookie.
-    Returns access token as JSON.
-
-    Args:
-        response (Response): Response.
-        username (str): User ID.
-
-    Returns:
-        AccessToken (AccessToken): Access token.
-
-    """
     access_token, refresh_token = create_tokens(username=username)
 
     response.set_cookie(
@@ -87,18 +54,6 @@ def create_tokens_response(response: Response, username: str) -> AccessToken:
 
 
 def decode_jwt_token(token: str) -> Token:
-    """
-    Decode JWT token.
-
-    Args:
-        token (str): JWT token.
-
-    Returns:
-        Token (Token): Decoded token.
-
-    Raises:
-        HTTPException: 401 status code if token is invalid.
-    """
     try:
         return Token(
             **jwt.decode(

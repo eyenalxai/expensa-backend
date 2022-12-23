@@ -11,8 +11,6 @@ CATEGORY_NAME_LENGTH = 64
 
 
 class UserModel(Base):
-    """User model."""
-
     __tablename__ = "users"
 
     user_id: Mapped[int] = mapped_column(primary_key=True)
@@ -24,8 +22,6 @@ class UserModel(Base):
 
 
 class CategoryModel(Base):
-    """Expense category model."""
-
     __tablename__ = "categories"
 
     category_id: Mapped[int] = mapped_column(primary_key=True)
@@ -41,8 +37,6 @@ class CategoryModel(Base):
 
 
 class ExpenseModel(Base):
-    """Expense model."""
-
     __tablename__ = "expenses"
 
     expense_id: Mapped[int] = mapped_column(primary_key=True)

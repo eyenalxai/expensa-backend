@@ -17,19 +17,6 @@ async def get_current_user(
     async_session: AsyncSession = Depends(get_session),
     token: str = Depends(oauth2_scheme),
 ) -> UserModel:
-    """
-    Get current user.
-
-    Args:
-        async_session (AsyncSession): Async database session. Injected as dependency.
-        token (str): Access token. Injected as dependency.
-
-    Returns:
-        UserModel: User model.
-
-    Raises:
-        HTTPException: If user is not found.
-    """
     payload = decode_jwt_token(token=token)
     user = await get_user(async_session=async_session, username=payload.sub)
 
@@ -47,20 +34,6 @@ async def authenticate_user(
     username: str,
     password: str,
 ) -> UserModel:
-    """
-    Authenticate user.
-
-    Args:
-        async_session (AsyncSession): Async database session.
-        username (str): Username.
-        password (str): Password.
-
-    Returns:
-        UserModel: User models.
-
-    Raises:
-        HTTPException: If user is not found or password is invalid.
-    """
     user = await get_user(async_session=async_session, username=username)
 
     if not user:

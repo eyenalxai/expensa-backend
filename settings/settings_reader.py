@@ -2,8 +2,6 @@ from pydantic import BaseSettings, Field, validator
 
 
 class Settings(BaseSettings):
-    """Settings for the application."""
-
     database_url: str = Field(env="DATABASE_URL")
     port: int = Field(env="PORT")
     is_localhost: bool = Field(env="IS_LOCALHOST", default=True)
@@ -15,26 +13,10 @@ class Settings(BaseSettings):
 
     @property
     def algorithms(self) -> list[str]:
-        """
-        Algorithms for JWT.
-
-        Returns:
-            algorithms (list[str]): Algorithms for JWT.
-
-        """
         return [self.algorithm]
 
     @property
     def async_database_url(self: "Settings") -> str:
-        """
-        Return the database url with the asyncpg driver.
-
-        Returns:
-            async_database_url (str): The database url with the asyncpg driver.
-
-        Raises:
-            ValueError: If the database url does not start with postgresql://.
-        """
         async_database_url = self.database_url.replace(
             "postgresql://",
             "postgresql+asyncpg://",
@@ -47,13 +29,6 @@ class Settings(BaseSettings):
 
     @property
     def frontend_origin(self: "Settings") -> str:
-        """
-        Get the frontend origin.
-
-        Returns:
-            frontend_url (str): The frontend origin.
-
-        """
         if self.is_localhost:
             return "http://{frontend_domain}".format(
                 frontend_domain=self.frontend_domain,
@@ -62,12 +37,6 @@ class Settings(BaseSettings):
 
     @property
     def allowed_origins(self: "Settings") -> list:
-        """
-        Get the allowed origins.
-
-        Returns:
-            allowed_origins (list): The allowed origins.
-        """
         return [self.frontend_origin]
 
     @validator("database_url")
