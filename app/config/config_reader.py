@@ -4,7 +4,7 @@ from pydantic import BaseSettings, Field, validator
 class AppConfig(BaseSettings):
     database_url: str = Field(env="DATABASE_URL")
     port: int = Field(env="PORT")
-    host: str = Field(env="HOST")
+    host: str | None = Field(env="HOST", default="0.0.0.0")
     is_localhost: bool = Field(env="IS_LOCALHOST", default=True)
     frontend_domain: str = Field(env="FRONTEND_DOMAIN")
 
