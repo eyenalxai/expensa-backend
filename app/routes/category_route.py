@@ -15,10 +15,10 @@ from app.utils.query.category_query import (
     is_category_already_added,
 )
 
-category_router = APIRouter(tags=["Category"], prefix="/category")
+category_router = APIRouter(tags=["Category"])
 
 
-@category_router.get("/", response_model=list[CategorySchema])
+@category_router.get("/category", response_model=list[CategorySchema])
 async def get_categories(
     async_session: AsyncSession = Depends(get_session),
     current_user: UserModel = Depends(get_current_user),
@@ -31,7 +31,7 @@ async def get_categories(
     return category_models_to_schemas(category_models=categories)
 
 
-@category_router.post("/")
+@category_router.post("/category")
 async def add_category(
     category: CategorySchemaAdd,
     async_session: AsyncSession = Depends(get_session),
@@ -58,7 +58,7 @@ async def add_category(
     return Response(status_code=HTTP_201_CREATED)
 
 
-@category_router.delete("/{category_id}")
+@category_router.delete("/category/{category_id}")
 async def delete_category(
     category_id: int,
     async_session: AsyncSession = Depends(get_session),
