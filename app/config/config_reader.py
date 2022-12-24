@@ -3,9 +3,9 @@ from pydantic import BaseSettings, Field, validator
 
 class AppConfig(BaseSettings):
     database_url: str = Field(env="DATABASE_URL")
-    port: int = Field(env="PORT")
+    port: int = Field(env="PORT", default=8000)  # noqa: WPS432 Found magic number
     host: str | None = Field(env="HOST", default="0.0.0.0")
-    is_localhost: bool = Field(env="IS_LOCALHOST", default=True)
+    is_localhost: bool = Field(env="IS_LOCALHOST", default=False)
     frontend_domain: str = Field(env="FRONTEND_DOMAIN")
 
     algorithm: str = "HS256"

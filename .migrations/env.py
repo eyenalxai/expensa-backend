@@ -18,7 +18,9 @@ if config.config_file_name is not None:
 
 target_metadata = Base.metadata
 
-from app.models.models import UserModel  # noqa: F401, E402
+from app.models.models import UserModel
+from app.models.models import CategoryModel
+from app.models.models import ExpenseModel
 
 config.set_main_option("sqlalchemy.url", app_config.async_database_url)
 
