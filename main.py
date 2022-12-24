@@ -5,4 +5,4 @@ from app.initialize import initialize_app
 
 if __name__ == "__main__":
     app = initialize_app()
-    uvicorn.run(app, host="localhost", port=app_config.port)
+    uvicorn.run(app, host=app_config.host, port=app_config.port)

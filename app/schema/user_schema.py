@@ -15,17 +15,27 @@ class UserSchema(Immutable):
 
 class UserSchemaAdd(Immutable):
     class Username(ConstrainedStr):
-        min_length = 1
-        max_length = app_config.username_length
         to_lower = True
         strip_whitespace = True
 
     class Password(ConstrainedStr):
-        min_length = 1
         strip_whitespace = True
 
     username: Username
     password: Password
+
+    @validator("username")
+    def username_must_be_ok(
+        cls,  # noqa: N805 first argument of a method should be named 'self'
+        v: str,  # noqa: WPS111 Found too short name: v < 2
+    ) -> str:
+        if len(v) < 1:  # noqa: WPS507 Found useless `len()` compare
+            raise ValueError("username is too short")
+
+        if len(v) > app_config.username_length:
+            raise ValueError("username is too long")
+
+        return v
 
     @validator("password")
     def password_must_be_strong_enough(  # noqa: WPS238 Found too many raises
