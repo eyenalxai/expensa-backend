@@ -39,11 +39,15 @@ async def authenticate_user(
             password=password,
         )
 
-    if not verify_password(password, user.password_hash):
+    is_password_correct = verify_password(
+        plain_password=password,
+        hashed_password=user.password_hash,
+    )
+
+    if not is_password_correct:
         raise HTTPException(
             status_code=HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
+            detail="wrong password",
         )
 
     return user

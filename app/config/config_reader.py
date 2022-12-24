@@ -6,10 +6,18 @@ class AppConfig(BaseSettings):
     port: int = Field(env="PORT")
     is_localhost: bool = Field(env="IS_LOCALHOST", default=True)
     frontend_domain: str = Field(env="FRONTEND_DOMAIN")
-    hashing_secret: str = Field(env="HASHING_SECRET")
+
     algorithm: str = "HS256"
+    hashing_secret: str = Field(env="HASHING_SECRET")
     access_token_expire_minutes: int = 30
     refresh_token_expire_minutes: int = 60 * 24 * 7
+
+    refresh_token_cookie_key: str = "refresh_token"
+
+    category_name_length: int = 16
+    password_hash_length: int = 60
+    username_length: int = 24
+    password_min_length: int = 12
 
     @property
     def algorithms(self) -> list[str]:

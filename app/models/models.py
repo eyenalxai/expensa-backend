@@ -2,20 +2,19 @@ from sqlalchemy import ForeignKey, String, func
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from app.config.config_reader import app_config
 from app.models.base import Base
-
-USERNAME_LENGTH = 64
-PASSWORD_HASH_LENGTH = 60
-
-CATEGORY_NAME_LENGTH = 64
 
 
 class UserModel(Base):
     __tablename__ = "users"
 
     user_id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String(USERNAME_LENGTH), unique=True)
-    password_hash: Mapped[str] = mapped_column(String(PASSWORD_HASH_LENGTH))
+    username: Mapped[str] = mapped_column(
+        String(app_config.username_length),
+        unique=True,
+    )
+    password_hash: Mapped[str] = mapped_column(String(app_config.password_hash_length))
 
     categories: Mapped[list["CategoryModel"]] = relationship(back_populates="user")
     expenses: Mapped[list["ExpenseModel"]] = relationship(back_populates="user")
@@ -26,7 +25,7 @@ class CategoryModel(Base):
 
     category_id: Mapped[int] = mapped_column(primary_key=True)
     category_name: Mapped[str] = mapped_column(
-        String(CATEGORY_NAME_LENGTH),
+        String(app_config.category_name_length),
         unique=False,
     )
 

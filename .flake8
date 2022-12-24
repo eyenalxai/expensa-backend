@@ -15,3 +15,5 @@ max-line-length = 88
 # Exclude some directories from flake8
 # __init__.py files are excluded by default
 exclude = .git,.idea,.mypy_cache,.venv,.vscode,.migrations
+
+nested-classes-whitelist = Config, Password, Username, CategoryName

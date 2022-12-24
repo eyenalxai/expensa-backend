@@ -57,7 +57,7 @@ def create_tokens_response(response: Response, username: str) -> AccessToken:
     access_token, refresh_token = create_tokens(username=username)
 
     response.set_cookie(
-        key="refresh_token",
+        key=app_config.refresh_token_cookie_key,
         value=refresh_token,
         expires=app_config.refresh_token_expire_minutes * 60,
         httponly=True,

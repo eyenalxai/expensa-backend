@@ -54,5 +54,18 @@ line-length = 88
 
 [tool.vulture]
 exclude = [".git", ".idea", ".mypy_cache", ".venv", ".vscode", ".migrations"]
-ignore_names = ["Config", "frozen", "token_type", "orm_mode", "cls", "exp"]
-ignore_decorators = ["@auth_router.*", "@user_router.*", "@validator"]
+ignore_names = [
+    "Config",
+    "frozen",
+    "token_type",
+    "orm_mode",
+    "cls",
+    "exp",
+    "allow_population_by_field_name"
+]
+ignore_decorators = [
+    "@auth_router.*",
+    "@user_router.*",
+    "@category_router.*",
+    "@validator"
+]
