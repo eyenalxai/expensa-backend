@@ -6,11 +6,9 @@
 # D103: Missing docstring in public function
 # D104: Missing docstring in public package
 # D106: Missing docstring in public nested class
-# I001: isort found an import in the wrong position
 # Q000: Double quotes found but single quotes preferred
 # S104: Possible binding to all interfaces
 # WPS306: Found class without a base class
-# WPS404: Found complex default value
 ignore = B008, D100, D101, D102, D103, D104, D106, I001, Q000, S104, WPS306, WPS404
 max-line-length = 88
 
