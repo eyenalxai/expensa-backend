@@ -11,7 +11,7 @@ from app.utils.token import AccessToken, create_tokens_response, decode_jwt_toke
 auth_router = APIRouter(tags=["Auth"])
 
 
-@auth_router.post("/refresh", response_model=AccessToken)
+@auth_router.post("/refresh_tokens", response_model=AccessToken)
 async def refresh_tokens(
     response: Response,
     refresh_token: str | None = Cookie(default=None),
@@ -27,8 +27,8 @@ async def refresh_tokens(
     )
 
 
-@auth_router.post("/auth", response_model=AccessToken)
-async def auth(
+@auth_router.post("/login", response_model=AccessToken)
+async def login(
     response: Response,
     auth_data: UserSchemaAdd,
     async_session: AsyncSession = Depends(get_session),

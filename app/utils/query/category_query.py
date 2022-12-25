@@ -7,7 +7,7 @@ from app.models.models import CategoryModel, UserModel
 from app.schema.category_schema import CategorySchemaAdd
 
 
-async def get_user_categories(
+async def get_categories(
     async_session: AsyncSession,
     user: UserModel,
 ) -> Sequence[CategoryModel]:
@@ -17,7 +17,7 @@ async def get_user_categories(
     return query_result.scalars().all()
 
 
-def add_user_category(
+def add_category(
     async_session: AsyncSession,
     user: UserModel,
     category: CategorySchemaAdd,
@@ -30,17 +30,17 @@ def add_user_category(
     async_session.add(category_model)
 
 
-async def delete_user_category_by_id(
+async def delete_category_by_id(
     async_session: AsyncSession,
     user: UserModel,
     category_id: int,
 ) -> None:
-    category_query = delete(CategoryModel).where(
+    query = delete(CategoryModel).where(
         CategoryModel.user == user,
         CategoryModel.category_id == category_id,
     )
 
-    await async_session.execute(category_query)
+    await async_session.execute(query)
 
 
 async def is_category_already_added(

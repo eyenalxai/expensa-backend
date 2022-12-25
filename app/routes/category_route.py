@@ -9,9 +9,9 @@ from app.utils.auth import get_current_user
 from app.utils.database import get_session
 from app.utils.mapper.category_mapper import category_models_to_schemas
 from app.utils.query.category_query import (
-    add_user_category,
-    delete_user_category_by_id,
-    get_user_categories,
+    add_category,
+    delete_category_by_id,
+    get_categories,
     is_category_already_added,
 )
 
@@ -19,11 +19,11 @@ category_router = APIRouter(tags=["Category"])
 
 
 @category_router.get("/category", response_model=list[CategorySchema])
-async def get_categories(
+async def get(
     async_session: AsyncSession = Depends(get_session),
     current_user: UserModel = Depends(get_current_user),
 ) -> list[CategorySchema]:
-    categories = await get_user_categories(
+    categories = await get_categories(
         async_session=async_session,
         user=current_user,
     )
@@ -32,7 +32,7 @@ async def get_categories(
 
 
 @category_router.post("/category")
-async def add_category(
+async def post(
     category: CategorySchemaAdd,
     async_session: AsyncSession = Depends(get_session),
     current_user: UserModel = Depends(get_current_user),
@@ -49,7 +49,7 @@ async def add_category(
             detail="category already added",
         )
 
-    add_user_category(
+    add_category(
         async_session=async_session,
         user=current_user,
         category=category,
@@ -59,12 +59,12 @@ async def add_category(
 
 
 @category_router.delete("/category/{category_id}")
-async def delete_category(
+async def delete(
     category_id: int,
     async_session: AsyncSession = Depends(get_session),
     current_user: UserModel = Depends(get_current_user),
 ) -> Response:
-    await delete_user_category_by_id(
+    await delete_category_by_id(
         async_session=async_session,
         user=current_user,
         category_id=category_id,

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import ForeignKey, String, func
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -40,7 +42,7 @@ class ExpenseModel(Base):
 
     expense_id: Mapped[int] = mapped_column(primary_key=True)
     expense_amount: Mapped[float] = mapped_column(unique=False)
-    expense_date: Mapped[str] = mapped_column(TIMESTAMP, server_default=func.now())
+    expense_date: Mapped[datetime] = mapped_column(TIMESTAMP, server_default=func.now())
 
     category_id: Mapped[int] = mapped_column(ForeignKey(CategoryModel.category_id))
     category: Mapped["CategoryModel"] = relationship(back_populates="expenses")

@@ -9,5 +9,5 @@ user_router = APIRouter(tags=["User"])
 
 
 @user_router.get("/me", response_model=UserSchema)
-async def me(current_user: UserModel = Depends(get_current_user)) -> UserSchema:
+async def get(current_user: UserModel = Depends(get_current_user)) -> UserSchema:
     return user_model_to_schema(user=current_user)
