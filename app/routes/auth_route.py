@@ -8,7 +8,7 @@ from app.utils.auth import authenticate_user
 from app.utils.database import get_session
 from app.utils.token import AccessToken, create_tokens_response, decode_jwt_token
 
-auth_router = APIRouter(tags=["Auth"])
+auth_router = APIRouter(tags=["auth"])
 
 
 @auth_router.post("/refresh_tokens", response_model=AccessToken)

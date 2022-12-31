@@ -1,4 +1,4 @@
-from sqlalchemy import Result, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.models import UserModel
@@ -10,7 +10,7 @@ async def get_user(
     username: str,
 ) -> UserModel | None:
     query = select(UserModel).where(UserModel.username == username)
-    query_result: Result = await async_session.execute(query)
+    query_result = await async_session.execute(query)
 
     return query_result.scalar_one_or_none()
 

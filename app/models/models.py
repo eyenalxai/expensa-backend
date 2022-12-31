@@ -30,6 +30,7 @@ class CategoryModel(Base):
         String(app_config.category_name_length),
         unique=False,
     )
+    is_active: Mapped[bool] = mapped_column(default=True)
 
     user_id: Mapped[int] = mapped_column(ForeignKey(UserModel.user_id))
     user: Mapped["UserModel"] = relationship(back_populates="categories")

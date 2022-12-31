@@ -5,7 +5,7 @@ from app.schema.user_schema import UserSchema
 from app.utils.auth import get_current_user
 from app.utils.mapper.user_mapper import user_model_to_schema
 
-user_router = APIRouter(tags=["User"])
+user_router = APIRouter(tags=["user"])
 
 
 @user_router.get("/me", response_model=UserSchema)
